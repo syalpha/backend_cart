@@ -6,10 +6,10 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    productsId: {
-        type: String,
-        required: true
-    },
+    // productsId: {
+    //     type: String,
+    //     required: true
+    // },
 
     quantity: {
         type: Number,
@@ -28,7 +28,16 @@ const OrderSchema = new mongoose.Schema({
    status: {
     type: String,
     default: 'pending'
-  }
+  },
+
+  imglogo: {
+    type: String,
+    default: 'pending'
+  },
+
+  note: {
+    type: String,
+  },
 },
     { timestamps: true }
 );
