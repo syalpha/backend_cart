@@ -9,9 +9,12 @@ const ProductRoute = require('./route/Product')
 const OrderRoute = require('./route/Order')
 const CartRoute = require('./route/Cart')
 
+
+
 server.use(bodyParser.urlencoded({ extended: true }))
 
 server.use(bodyParser.json({ extended: true }))
+
 
 //Routes
 
