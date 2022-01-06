@@ -101,13 +101,19 @@
 const express = require('express');
 const router = express.Router();
 
+const {
+    verifyToken,
+    verifyTokenAndAuthorization,
+    verifyTokenAndAdmin,
+  } = require("./VerifyToken");
+
 const OrderController = require('../Controller/Order')
 
-router.get('/', OrderController.findAll);
-router.get('/find/:userId', OrderController.find);
-router.post('/create', OrderController.create);
-router.patch('/:id', OrderController.update);
-router.delete('/:id', OrderController.destroy);
-router.get('/income', OrderController. income);
+router.get('/', verifyTokenAndAdmin, OrderController.findAll);
+router.get('/find/:userId', verifyTokenAndAdmin, OrderController.find);
+router.post('/create', verifyTokenAndAdmin, OrderController.create);
+router.patch('/:id', verifyTokenAndAdmin, OrderController.update);
+router.delete('/:id', verifyTokenAndAdmin, OrderController.destroy);
+router.get('/income', verifyTokenAndAdmin, OrderController. income);
 
 module.exports = router; 
