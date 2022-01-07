@@ -7,24 +7,8 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-//REGISTER
-// router.post("/register", async (req, res) => {
-//   const newAdmin = new Admin({
-//     username: req.body.username,
-//     email: req.body.email,
-//     password: CryptoJS.AES.encrypt(
-//       req.body.password,
-//       process.env.PASS_SEC
-//     ).toString(),
-//   });
 
-//   try {
-//     const savedAdmin = await newAdmin.save();
-//     res.status(201).json(savedAdmin);
-//   }catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+/////////////////////////////////REGISTER/////////////////////////////////////
 
 router.post("/register", async (req, res) => {
 
@@ -75,84 +59,47 @@ router.post("/register", async (req, res) => {
   // Our register logic ends here
 });
 
-//LOGIN
 
-// router.post('/login', async (req, res) => {
-//     try{
-//         const admin = await Admin.findOne(
-//             {
-//                 email: req.body.email
-//             }
-//         );
-
-//         !admin && res.status(401).json("Wrong admin Name");
-
-//         const hashedPassword = CryptoJS.AES.decrypt(
-//             admin.password,
-//             process.env.PASS_SEC
-//         );
-
-
-//         const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
-
-//         const inputPassword = req.body.password;
-        
-//         originalPassword != inputPassword && 
-//             res.status(401).json("Wrong Password");
-
-//         const accessToken = jwt.sign(
-//         {
-//             id: admin._id,
-//             isAdmin: admin.isAdmin,
-//         },
-//         process.env.JWT_SEC,
-//             {expiresIn:"3h"}
-//         );
-  
-//         const { password, ...others } = admin._doc;  
-//         res.status(200).json({...others, accessToken});
-
-//     } catch(err){
-//         res.status(500).json(err);
-//     }
-
-// });
+/////////////////////////LOGIN/////////////////////////////////////////////
 
 router.post("/login", async (req, res) => {
-
-  // Our login logic starts here
-  try {
-    // Get admin input
-    const { email, password } = req.body;
-
-    // Validate admin input
-    if (!(email && password)) {
-      res.status(400).send("All input is required");
+  Admin.findOne({
+    where: {
+      email: req.body.email
     }
-    // Validate if admin exist in our database
-    const admin = await Admin.findOne({ email });
+  })
+    .then(admin => {
+      if (!admin) {
+        return res.status(404).send({ message: "admin Not found." });
+      }
 
-    if (admin && (await bcrypt.compare(password, admin.password))) {
-      // Create token
-      const token = jwt.sign(
-        { admin_id: admin._id, email },
-        process.env.TOKEN_SECRET,
-        {
-          expiresIn: "2h",
-        }
+      var passwordIsValid = bcrypt.compareSync(
+        req.body.password,
+        admin.password
       );
 
-      // save admin token
-      admin.token = token;
+      if (!passwordIsValid) {
+        return res.status(401).send({
+          accessToken: null,
+          message: "Invalid Password!"
+        });
+      }
 
-      // admin
-      res.status(200).json(admin);
-    }
-    res.status(400).send("Invalid Credentials");
-  } catch (err) {
-    console.log(err);
-  }
-  // Our register logic ends here
+      var token = jwt.sign({ id: admin.id }, process.env.TOKEN_SECRET, {
+        expiresIn: 86400 // 24 hours
+      });
+
+        res.status(200).send({
+          id: admin.id,
+          email: admin.email,
+          password: admin.password,
+          accessToken: token
+        });
+     
+    })
+    .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
 });
 
 module.exports = router;
