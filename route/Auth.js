@@ -31,10 +31,10 @@ router.post("/register", async (req, res) => {
   // Our register logic starts here
   try {
     // Get admin input
-    const {username, email, password } = req.body;
+    const { username, email, password } = req.body;
 
     // Validate admin input
-    if (!(email && password && username )) {
+    if (!(email && password && username)) {
       res.status(400).send("All input is required");
     }
 
@@ -77,46 +77,46 @@ router.post("/register", async (req, res) => {
 
 //LOGIN
 
-// router.post('/login', async (req, res) => {
-//     try{
-//         const admin = await Admin.findOne(
-//             {
-//                 email: req.body.email
-//             }
-//         );
+/*router.post('/login', async (req, res) => {
+  try {
+    const admin = await Admin.findOne(
+      {
+        email: req.body.email
+      }
+    );
 
-//         !admin && res.status(401).json("Wrong admin Name");
+    !admin && res.status(401).json("Wrong admin Name");
 
-//         const hashedPassword = CryptoJS.AES.decrypt(
-//             admin.password,
-//             process.env.PASS_SEC
-//         );
+    const hashedPassword = CryptoJS.AES.decrypt(
+      admin.password,
+      process.env.PASS_SEC
+    );
 
 
-//         const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
+    const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
 
-//         const inputPassword = req.body.password;
-        
-//         originalPassword != inputPassword && 
-//             res.status(401).json("Wrong Password");
+    const inputPassword = req.body.password;
 
-//         const accessToken = jwt.sign(
-//         {
-//             id: admin._id,
-//             isAdmin: admin.isAdmin,
-//         },
-//         process.env.JWT_SEC,
-//             {expiresIn:"3h"}
-//         );
-  
-//         const { password, ...others } = admin._doc;  
-//         res.status(200).json({...others, accessToken});
+    originalPassword != inputPassword &&
+      res.status(401).json("Wrong Password");
 
-//     } catch(err){
-//         res.status(500).json(err);
-//     }
+    const accessToken = jwt.sign(
+      {
+        id: admin._id,
+        isAdmin: admin.isAdmin,
+      },
+      process.env.TOKEN_SECRET,
+      { expiresIn: "3h" }
+    );
 
-// });
+    const { password, ...others } = admin._doc;
+    res.status(200).json({ ...others, accessToken });
+
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
+});*/
 
 router.post("/login", async (req, res) => {
 
