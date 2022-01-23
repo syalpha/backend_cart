@@ -73,12 +73,18 @@
 const express = require('express');
 const router = express.Router();
 
+const {
+    verifyToken,
+    verifyTokenAndAuthorization,
+    verifyTokenAndAdmin,
+  } = require("./VerifyToken");
+
 const CartController = require('../Controller/Cart')
 
 router.get('/', CartController.findAll);
 router.get('/find/:userId', CartController.findOne);
-router.post('/create', CartController.create);
-router.patch('/:id', CartController.update);
-router.delete('/:id', CartController.destroy);
+router.post('/create', verifyTokenAndAdmin, CartController.create);
+router.patch('/:id', verifyTokenAndAdmin, CartController.update);
+router.delete('/:id', verifyTokenAndAdmin, CartController.destroy);
 
 module.exports = router; 

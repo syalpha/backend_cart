@@ -88,12 +88,18 @@
 const express = require('express');
 const router = express.Router();
 
+const {
+  verifyToken,
+  verifyTokenAndAuthorization,
+  verifyTokenAndAdmin,
+} = require("./VerifyToken");
+
 const ProductController = require('../Controller/Product')
 
-router.get('/', ProductController.findAll);
+router.get('/all', ProductController.findAll);
 router.get('/:id', ProductController.findOne);
 router.post('/create', ProductController.create);
-router.patch('/:id', ProductController.update);
-router.delete('/:id', ProductController.destroy);
+router.patch('/:id', verifyTokenAndAdmin, ProductController.update);
+router.delete('/:id', verifyTokenAndAdmin, ProductController.destroy);
 
 module.exports = router;
