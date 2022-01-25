@@ -23,7 +23,7 @@ const AdminSchema = new mongoose.Schema(
       },
     isAdmin: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   

@@ -98,7 +98,7 @@ const ProductController = require('../Controller/Product')
 
 router.get('/', ProductController.findAll);
 router.get('/:id', ProductController.findOne);
-router.post('/create', verifyTokenAndAdmin, ProductController.create);
+router.post('/create', verifyToken, ProductController.create);
 router.patch('/:id',  verifyTokenAndAdmin,ProductController.update);
 router.delete('/:id', verifyTokenAndAdmin, ProductController.destroy);
 
