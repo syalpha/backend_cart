@@ -15,10 +15,10 @@ router.post("/register", async (req, res) => {
   // Our register logic starts here
   try {
     // Get admin input
-    const {username, email, password } = req.body;
+    const { username, email, password } = req.body;
 
     // Validate admin input
-    if (!(email && password && username )) {
+    if (!(email && password && username)) {
       res.status(400).send("All input is required");
     }
 
@@ -89,13 +89,13 @@ router.post("/login", async (req, res) => {
         expiresIn: 86400 // 24 hours
       });
 
-        res.status(200).send({
-          id: admin.id,
-          email: admin.email,
-          password: admin.password,
-          accessToken: token
-        });
-     
+      res.status(200).send({
+        id: admin.id,
+        email: admin.email,
+        password: admin.password,
+        accessToken: token
+      });
+
     })
     .catch(err => {
       res.status(500).send({ message: err.message });

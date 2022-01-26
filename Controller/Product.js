@@ -3,11 +3,16 @@ const { verifyToken } = require('../route/VerifyToken');
 
 
 // Create and Save a new create
+<<<<<<< HEAD
 exports.create = verifyToken, async (req, res) => {
     if (!req.body.title && !req.body.desc && !req.body.img && !req.body.price && !req.body.categorie ) {
+=======
+exports.create = async (req, res) => {
+    if (!req.body.title && !req.body.desc && !req.body.img && !req.body.price && !req.body.categorie && !req.body.qtite) {
+>>>>>>> f674e88bac075b444a1f3204b6ec390fddbda007
         res.status(400).send({ message: "Content can not be empty!" });
     }
-    
+
     const product = new Product({
 
         title: req.body.title,
@@ -15,12 +20,13 @@ exports.create = verifyToken, async (req, res) => {
         img: req.body.img,
         categorie: req.body.categorie,
         price: req.body.price,
+        qtite: req.body.qtite,
     });
-    
+
     await product.save().then(data => {
         res.send({
-            message:"Product created successfully!!",
-            product:data
+            message: "Product created successfully!!",
+            product: data
         });
     }).catch(err => {
         res.status(500).send({
@@ -34,8 +40,8 @@ exports.findAll = async (req, res) => {
     try {
         const product = await Product.find();
         res.status(200).json(product);
-    } catch(error) {
-        res.status(404).json({message: error.message});
+    } catch (error) {
+        res.status(404).json({ message: error.message });
     }
 };
 
@@ -44,27 +50,27 @@ exports.findOne = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
         res.status(200).json(product);
-    } catch(error) {
-        res.status(404).json({ message: error.message});
+    } catch (error) {
+        res.status(404).json({ message: error.message });
     }
 };
 
 // Update a product by the id in the request
 exports.update = async (req, res) => {
-    if(!req.body) {
+    if (!req.body) {
         res.status(400).send({
             message: "Data to update can not be empty!"
         });
     }
-    
+
     const id = req.params.id;
-    
+
     await Product.findByIdAndUpdate(id, req.body, { useFindAndModify: false }).then(data => {
         if (!data) {
             res.status(404).send({
                 message: `User not found.`
             });
-        }else{
+        } else {
             res.send({ message: "Product updated successfully." })
         }
     }).catch(err => {
@@ -78,17 +84,17 @@ exports.update = async (req, res) => {
 exports.destroy = async (req, res) => {
     await Product.findByIdAndRemove(req.params.id).then(data => {
         if (!data) {
-          res.status(404).send({
-            message: `product not found.`
-          });
+            res.status(404).send({
+                message: `product not found.`
+            });
         } else {
-          res.send({
-            message: "Product deleted successfully!"
-          });
+            res.send({
+                message: "Product deleted successfully!"
+            });
         }
     }).catch(err => {
         res.status(500).send({
-          message: err.message
+            message: err.message
         });
     });
 };
