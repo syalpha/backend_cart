@@ -100,14 +100,15 @@
 
 const express = require('express');
 const router = express.Router();
-
+const stripe = require('stripe')('sk_test_51KEcipKN0gt4zFdRhEixWzcloryZ0QlYHWhIy9syPWJF8sChb0LIpEj7rRo2byN2xFtxC3W2f2zEaHZLbaXgeIio00mzdNskKH');
 const {
     verifyToken,
     verifyTokenAndAuthorization,
     verifyTokenAndAdmin,
   } = require("./VerifyToken");
 
-const OrderController = require('../Controller/Order')
+const OrderController = require('../Controller/Order');
+const Product = require('../model/Product');
 
 router.get('/', verifyTokenAndAdmin, OrderController.findAll);
 router.get('/find/:userId', verifyTokenAndAdmin, OrderController.find);
@@ -115,5 +116,38 @@ router.post('/create', verifyTokenAndAdmin, OrderController.create);
 router.patch('/:id', verifyTokenAndAdmin, OrderController.update);
 router.delete('/:id', verifyTokenAndAdmin, OrderController.destroy);
 router.get('/income', verifyTokenAndAdmin, OrderController. income);
-
+router.post('/checkout', async(req, res) => {
+  try {
+      console.log(req.body);
+      token = req.body.token
+    const customer = stripe.customers
+      .create({
+        email: "yaya.ly@uadb.edu.sn",
+        source: token.id
+      })
+      .then((customer) => {
+        console.log(customer);
+        return stripe.charges.create({
+          amount: 1000,
+          description: "Test Purchase using express and Node",
+          currency: "USD",
+          customer: customer.id,
+        });
+      })
+      .then((charge) => {
+        console.log(charge);
+          res.json({
+            data:"success"
+        })
+      })
+      .catch((err) => {
+          res.json({
+            data: "failure",
+          });
+      });
+    return true;
+  } catch (error) {
+    return false;
+  }
+})
 module.exports = router; 
