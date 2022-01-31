@@ -8,8 +8,10 @@ const setup = new paydunya.Setup({
   token: 'rJAGC0bGkNnnfY9p2aBd',
   mode: 'test', // Optionnel. Utilisez cette option pour les paiements tests.
   cancelURL: 'http://magasin-le-choco.com/cancel_url',
-  returnURL: 'http://magasin-le-choco.com/return_url'
+  returnURL: 'http://magasin-le-choco.com/return_url',
+  url: 'https://paydunya.com/checkout/invoice/rJAGC0bGkNnnfY9p2aBd'
 });
+
 
 
 // Procédez ainsi si vous souhaitez rediriger vos clients vers notre site Web  afin qu'il puisse achever le processus de paiement
@@ -50,6 +52,21 @@ app.post('/ipn-url', function(req, res) {
     
     const hash = req.body.data.hash;
 });
+
+try{
+  // Prenez votre MasterKey, hashez la et comparez le résultat au hash reçu par IPN
+  if(hash == sha512("X7BAbgUo-lZ7X-mwUh-jZxS-Tshr5mrcM6wM")) {
+    if(status == "completed") {
+      // Faites vos traitements backoffice ici...
+    }
+  }
+  else {
+    console.log("Cette requête n'a pas été émise par PayDunya");
+  };
+} 
+   catch(e) {
+  console.log(e);
+};
 
 
 // Le code suivant décrit comment créer une facture de paiement au niveau de nos serveurs,
