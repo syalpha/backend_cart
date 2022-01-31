@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 
 router.post('/create',uploadOptions.single('image'),async (req,res)=>{
 
-    const fileName = req.file.filename
+    const fileName = req.file;
     const basePath = `${req.protocol}://${req.get('host')}/public/upload/`
     const designYourCart = new DesignYourCart({
 

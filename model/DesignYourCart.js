@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const DesignYourCartSchema = new mongoose.Schema({
 
     image:{
-        type: file,
+        type: String,
         required: false,
     },
     prenom:{
