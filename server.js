@@ -9,6 +9,8 @@ const ProductRoute = require('./route/Product')
 const OrderRoute = require('./route/Order')
 const CartRoute = require('./route/Cart')
 const cors = require("cors");
+const paydounya = require('./route/paydounya')
+
 
 var corsOptions = {
     origin: "http://localhost:4200"
@@ -28,6 +30,7 @@ server.use('/user', UserRoute)
 server.use('/product', ProductRoute)
 server.use('/order', OrderRoute)
 server.use('/cart', CartRoute)
+server.use('/paydounya', paydounya)
 server.use(express.json())
 server.use('/api', Auth)
 
@@ -54,3 +57,4 @@ db.on("error", (err) => { console.error(err) })
 db.once("open", () => { console.log("DB started successfully") })
 
 server.listen(5000, () => { console.log("Server started: 5000") })
+
