@@ -3,13 +3,8 @@ const { verifyToken } = require('../route/VerifyToken');
 
 
 // Create and Save a new create
-<<<<<<< HEAD
 exports.create = verifyToken, async (req, res) => {
     if (!req.body.title && !req.body.desc && !req.body.img && !req.body.price && !req.body.categorie ) {
-=======
-exports.create = async (req, res) => {
-    if (!req.body.title && !req.body.desc && !req.body.img && !req.body.price && !req.body.categorie && !req.body.qtite) {
->>>>>>> f674e88bac075b444a1f3204b6ec390fddbda007
         res.status(400).send({ message: "Content can not be empty!" });
     }
 

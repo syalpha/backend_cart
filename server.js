@@ -8,6 +8,7 @@ const UserRoute = require('./route/User')
 const ProductRoute = require('./route/Product')
 const OrderRoute = require('./route/Order')
 const CartRoute = require('./route/Cart')
+const Paydunya = require('./route/Paydounya')
 const cors = require("cors");
 
 var corsOptions = {
@@ -30,7 +31,7 @@ server.use('/order', OrderRoute)
 server.use('/cart', CartRoute)
 server.use(express.json())
 server.use('/api', Auth)
-
+server.use('/paydunya',Paydunya)
 server.use(function (req, res, next) {
     req.socket.on("error", function () {
 
