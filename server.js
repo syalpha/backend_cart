@@ -33,7 +33,7 @@ server.use('/cart', CartRoute)
 server.use(express.json())
 server.use('/api', Auth)
 server.use('/design',DesignYourCartRoute)
-server.use('/paydunya',Paydunya)
+server.use('/app.paydunya.com/sandbox-api/',Paydunya)
 server.use(function (req, res, next) {
     req.socket.on("error", function () {
 
