@@ -10,7 +10,7 @@ const OrderRoute = require('./route/Order')
 const CartRoute = require('./route/Cart')
 const Paydunya = require('./route/Paydounya')
 const DesignYourCartRoute = require('./route/DesignYourCard')
-const cors = require("cors");
+const cors = require("cors");   
 
 var corsOptions = {
     origin: "http://localhost:4200"
