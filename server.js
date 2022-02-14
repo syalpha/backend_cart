@@ -8,15 +8,14 @@ const UserRoute = require('./route/User')
 const ProductRoute = require('./route/Product')
 const OrderRoute = require('./route/Order')
 const CartRoute = require('./route/Cart')
-<<<<<<< HEAD
-const cors = require("cors");
 const paydounya = require('./route/paydounya')
 
-=======
-const Paydunya = require('./route/Paydounya')
+const cors = require("cors");
+
+
 const DesignYourCartRoute = require('./route/DesignYourCard')
-const cors = require("cors");   
->>>>>>> 3ea30a88ba43cd4298aa495e7540615568780f32
+ 
+
 
 var corsOptions = {
     origin: "http://localhost:4200"
@@ -40,7 +39,7 @@ server.use('/paydounya', paydounya)
 server.use(express.json())
 server.use('/api', Auth)
 server.use('/design',DesignYourCartRoute)
-server.use('/app.paydunya.com/sandbox-api/',Paydunya)
+server.use('/app.paydunya.com/sandbox-api/',paydounya)
 server.use(function (req, res, next) {
     req.socket.on("error", function () {
 
