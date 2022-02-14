@@ -11,6 +11,7 @@ exports.create = async (req, res) => {
 
         email: req.body.email,
         fullname: req.body.fullname,
+        isAdmin:req.body.isAdmin,
         createDate: req.body.createDate,
         phone: req.body.phone,
         addresse: req.body.addresse,

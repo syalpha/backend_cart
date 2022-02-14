@@ -25,7 +25,7 @@ const AdminSchema = new mongoose.Schema(
 
     isAdmin: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
    {timestamps: true, }

@@ -4,19 +4,25 @@ const router = express.Router();
 const app = express()
 
 
+const setup = new paydounya.Setup({
+
+
+
 // const setup = new paydunya.Setup({
 
-//   masterKey: 'X7BAbgUo-lZ7X-mwUh-jZxS-Tshr5mrcM6wM',
-//   privateKey: 'test_private_GYqtXS57coENYdPwHR4vGEGeQNE',
-//   publicKey: 'test_public_vZAcHHaGaLu3kmkyguAnHkW7GRc',
-//   token: 'rJAGC0bGkNnnfY9p2aBd',
-//   callbackURL: 'http://localhost:5000',
-//   mode: 'test', // Optionnel. Utilisez cette option pour les paiements tests.
-//   cancelURL: 'http://magasin-le-choco.com/cancel_url',
-//   returnURL: 'http://magasin-le-choco.com/return_url',
-//   url: 'https://paydunya.com/checkout/invoice/rJAGC0bGkNnnfY9p2aBd'
 
-// });
+const setup = new paydunya.Setup({
+
+  masterKey: 'X7BAbgUo-lZ7X-mwUh-jZxS-Tshr5mrcM6wM',
+  privateKey: 'test_private_GYqtXS57coENYdPwHR4vGEGeQNE',
+  publicKey: 'test_public_vZAcHHaGaLu3kmkyguAnHkW7GRc',
+  token: 'rJAGC0bGkNnnfY9p2aBd',
+  callbackURL: 'http://localhost:5000',
+  mode: 'test', // Optionnel. Utilisez cette option pour les paiements tests.
+  cancelURL: 'http://magasin-le-choco.com/cancel_url',
+  returnURL: 'http://magasin-le-choco.com/return_url',
+  url: 'https://paydunya.com/checkout/invoice/rJAGC0bGkNnnfY9p2aBd'
+});
 
 
 //auguste.hountondji@paydunya.com
@@ -26,6 +32,9 @@ const app = express()
 // une instance des classes paydunya.Setup et paydunya.Store
 
 //const invoice = new paydunya.CheckoutInvoice(setup, store);
+
+
+// Configuration des informations de votre service/entreprise
 
 
 // Configuration des informations de votre service/entreprise
@@ -45,6 +54,7 @@ app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
+<<<<<<< HEAD
 
 
 // router.post('/pay',(res,req)=>{
@@ -67,6 +77,30 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 //   //res.send('test')
 // })
 
+=======
+<<<<<<< HEAD
+
+router.post('/pay',(res,req)=>{
+  const invoice = new paydounya.CheckoutInvoice(setup, store);
+  invoice.addItem('Chaussures Croco', 1, 10000, 30000, 'Chaussures faites en peau de crocrodile authentique qui chasse la pauvreté');
+  invoice.addItem('Chemise Glacée', 1, 5000, 5000);
+  invoice.description = "Description Optionnelle";
+  invoice.totalAmount = 200;
+  tk="rJAGC0bGkNnnfY9p2aBd" 
+  invoice.create()
+  .then(function (){
+    console.log(invoice.status);
+    console.log(invoice.token);  // Token de facture
+    console.log(invoice.responseText);
+    console.log(invoice.url); // URL de redirection de paiement de facture PayDunya
+  })
+  .catch(function (e) {
+    console.log(e);
+  });
+  //res.send('test')
+})
+=======
+>>>>>>> c690cfb048d7878cdd3e5be9cb7b2514b50ea5d1
 router.post('/v1/checkout-invoice/create',(req,res)=>{
   const setup = new paydounya.Setup({
     masterKey: 'X7BAbgUo-lZ7X-mwUh-jZxS-Tshr5mrcM6wM',
@@ -82,4 +116,5 @@ router.post('/v1/checkout-invoice/create',(req,res)=>{
 
 })
 
+>>>>>>> 3ea30a88ba43cd4298aa495e7540615568780f32
 module.exports = router;

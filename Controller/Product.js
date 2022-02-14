@@ -3,6 +3,7 @@ const { verifyToken } = require('../route/VerifyToken');
 
 
 
+
 // Create and Save a new create 
 
 exports.create = async (req, res) => {
@@ -46,6 +47,7 @@ exports.create = uploadOptions.single('img'), async(req,res) => {
         });
     });
 }};
+
 // Retrieve all users from the database.
 exports.findAll = async (req, res) => {
     try {
