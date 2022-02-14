@@ -96,7 +96,7 @@ const {
 
 const ProductController = require('../Controller/Product')
 
-router.get('/all', ProductController.findAll);
+//router.get('/all', ProductController.findAll);
 router.get('/:id', ProductController.findOne);
 
 router.post('/create', verifyToken, ProductController.create);
