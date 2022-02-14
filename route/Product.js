@@ -132,7 +132,7 @@ router.post('/create', uploadOptions.single('img'), async(req,res) => {
 });
 router.get('/all', ProductController.findAll);
 router.get('/:id', ProductController.findOne);
-router.patch('/:id',  verifyTokenAndAdmin,ProductController.update);
-router.delete('/:id', verifyTokenAndAdmin, ProductController.destroy);
+router.patch('/:id',ProductController.update);
+router.delete('/:id', ProductController.destroy);
 
 module.exports = router;

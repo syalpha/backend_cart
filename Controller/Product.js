@@ -1,41 +1,7 @@
 const Product = require('../model/Product');
 const { verifyToken } = require('../route/VerifyToken');
 
-const multer = require("multer");
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './public/upload/')
-    },
-    filename: function (req, file, cb) {
-      const fileName = file.originalname;
-      cb(null, Date.now() + fileName)
-    }
-  })
-  const uploadOptions = multer({ storage: storage })
-  
-exports.create = uploadOptions.single('img'), async(req,res) => {
-    const fileName = req.file.fileName
-    const basePath = `${req.protocol}://${req.get('host')}/public/upload/`
-    const productForm = new Product({
-
-        img:`${basePath}${fileName}`,
-        title: req.body.title,
-        desc: req.body.desc,
-        categorie: req.body.categorie,
-        price: req.body.price,
-        qtite: req.body.qtite,
-    });
-    await productForm.save().then(data => {
-        res.send({
-            message:"Product created successfully!!",
-            productForm:data
-        });
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while creating productForm"
-        });
-    });
-}
+ 
 // Retrieve all users from the database.
 exports.findAll = async (req, res) => {
     try {

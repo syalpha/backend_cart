@@ -1,5 +1,6 @@
 const express = require("express")
 const mongoose = require("mongoose")
+//const authJwt = require('./helpers/jwt')
 const server = express()
 const User = require('./model/User')
 const Auth = require('./route/Auth')
@@ -23,6 +24,7 @@ server.use(bodyParser.urlencoded({ extended: true }))
 
 server.use(bodyParser.json({ extended: true }))
 
+//server.use(authJwt)
 
 //Routes
 
