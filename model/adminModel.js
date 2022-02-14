@@ -19,7 +19,12 @@ const AdminSchema = new mongoose.Schema(
       required: true,
       minlength: 5,
       maxlength: 255,
+<<<<<<< HEAD
 },
+=======
+
+      },
+>>>>>>> 3ea30a88ba43cd4298aa495e7540615568780f32
     isAdmin: {
       type: Boolean,
       default: true,

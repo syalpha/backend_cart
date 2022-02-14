@@ -1,6 +1,7 @@
 const Product = require('../model/Product');
 const { verifyToken } = require('../route/VerifyToken');
 
+<<<<<<< HEAD
 
 // Create and Save a new create 
 
@@ -8,30 +9,43 @@ exports.create = async (req, res) => {
     if (!req.body.title && !req.body.desc && !req.body.img && !req.body.price && !req.body.categorie && !req.body.qtite) {
 
         res.status(400).send({ message: "Content can not be empty!" });
+=======
+const multer = require("multer");
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/upload/')
+    },
+    filename: function (req, file, cb) {
+      const fileName = file.originalname;
+      cb(null, Date.now() + fileName)
+>>>>>>> 3ea30a88ba43cd4298aa495e7540615568780f32
     }
+  })
+  const uploadOptions = multer({ storage: storage })
+  
+exports.create = uploadOptions.single('img'), async(req,res) => {
+    const fileName = req.file.fileName
+    const basePath = `${req.protocol}://${req.get('host')}/public/upload/`
+    const productForm = new Product({
 
-    const product = new Product({
-
+        img:`${basePath}${fileName}`,
         title: req.body.title,
         desc: req.body.desc,
-        img: req.body.img,
         categorie: req.body.categorie,
         price: req.body.price,
         qtite: req.body.qtite,
     });
-
-    await product.save().then(data => {
+    await productForm.save().then(data => {
         res.send({
-            message: "Product created successfully!!",
-            product: data
+            message:"Product created successfully!!",
+            productForm:data
         });
     }).catch(err => {
         res.status(500).send({
-            message: err.message || "Some error occurred while creating product"
+            message: err.message || "Some error occurred while creating productForm"
         });
     });
-};
-
+}
 // Retrieve all users from the database.
 exports.findAll = async (req, res) => {
     try {
