@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "engines": {
+    "node": "14.17.4"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
@@ -18,6 +21,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.4",
     "paydunya": "^1.0.11",
-    "stripe": "^8.199.0"
+    "stripe": "^8.199.0",
+    "babel-cli":"^6.26.0",
+    "babel-preset-env":"^1.7.0"
   }
 }
