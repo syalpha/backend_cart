@@ -20,5 +20,8 @@
     "paydunya": "^1.0.11",
     "stripe": "^8.203.0",
     "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
