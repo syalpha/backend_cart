@@ -53,7 +53,6 @@ mongoose
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            dbName: process.env.DB_NAME
         })
 
 const PORT = process.env.PORT || 5000;        
