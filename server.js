@@ -56,7 +56,7 @@ mongoose
             dbName: process.env.DB_NAME
         })
 
-const PORT = process.env.PORT || 5000;        
+const PORT = process.env.PORT || 8080;        
 const db = mongoose.connection
 
 db.on("error", (err) => { console.error(err) })
