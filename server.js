@@ -62,4 +62,4 @@ const db = mongoose.connection
 db.on("error", (err) => { console.error(err) })
 db.once("open", () => { console.log("DB started successfully") })
 
-server.listen(PORT, () => { console.log("Server started: 5000") })
+server.listen(PORT, () => { console.log("Server started: 8080") })
