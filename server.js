@@ -49,14 +49,17 @@ server.use(function (req, res, next) {
 
 
 mongoose
-    .connect("mongodb://localhost/backen_cart",
+    .connect(process.env.MONGO_URI,
         {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            dbName: process.env.DB_NAME
         })
+
+const PORT = process.env.PORT || 5000;        
 const db = mongoose.connection
 
 db.on("error", (err) => { console.error(err) })
 db.once("open", () => { console.log("DB started successfully") })
 
-server.listen(5000, () => { console.log("Server started: 5000") })
+server.listen(PORT, () => { console.log("Server started: 5000") })

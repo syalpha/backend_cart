@@ -15,10 +15,10 @@ router.post("/register", async (req, res) => {
   // Our register logic starts here
   try {
     // Get admin input
-    const { username, email, password } = req.body;
+    const { username, email, password,isAdmin } = req.body;
 
     // Validate admin input
-    if (!(email && password && username)) {
+    if (!(email && password && username && isAdmin)) {
       res.status(400).send("All input is required");
     }
 
@@ -38,11 +38,12 @@ router.post("/register", async (req, res) => {
       username,
       email: email.toLowerCase(), // sanitize: convert email to lowercase
       password: encryptedPassword,
+      isAdmin
     });
 
     // Create token
     const token = jwt.sign(
-      { admin_id: admin._id, email },
+      { admin_id: admin._id, email,isAdmin:admin.isAdmin },
       process.env.TOKEN_SECRET,
       {
         expiresIn: "2h",
@@ -85,12 +86,13 @@ router.post("/login", async (req, res) => {
         });
       }
 
-      var token = jwt.sign({ id: admin.id }, process.env.TOKEN_SECRET, {
+      var token = jwt.sign({ id: admin.id, isAdmin:admin.isAdmin }, process.env.TOKEN_SECRET, {
         expiresIn: 86400 // 24 hours
       });
 
       res.status(200).send({
         id: admin.id,
+        isAdmin: admin.isAdmin,
         email: admin.email,
         password: admin.password,
         accessToken: token
@@ -101,5 +103,6 @@ router.post("/login", async (req, res) => {
       res.status(500).send({ message: err.message });
     });
 });
+
 
 module.exports = router;
