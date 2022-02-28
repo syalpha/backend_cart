@@ -17,7 +17,17 @@ const stripe = require("stripe")(
 );
 
 var corsOptions = {
-    origin: "https://card-ap.herokuapp.com",
+    origin: "*",
+    methods: [
+        'GET',
+        'POST',
+        'PUT',
+        'DELETE'
+    ],
+
+    allowedHeaders: [
+        'Content-Type',
+    ],
 };
 
 server.use(cors(corsOptions));
@@ -80,3 +90,5 @@ db.once("open", () => {
 server.listen(PORT, () => {
     console.log("Server started: 5000");
 });
+
+//git push heroku HEAD:master
