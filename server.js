@@ -13,16 +13,16 @@ const Paydunya = require("./route/Paydunya");
 
 const cors = require("cors");
 const stripe = require("stripe")(
-  "sk_test_51KEcipKN0gt4zFdRhEixWzcloryZ0QlYHWhIy9syPWJF8sChb0LIpEj7rRo2byN2xFtxC3W2f2zEaHZLbaXgeIio00mzdNskKH"
+    "sk_test_51KEcipKN0gt4zFdRhEixWzcloryZ0QlYHWhIy9syPWJF8sChb0LIpEj7rRo2byN2xFtxC3W2f2zEaHZLbaXgeIio00mzdNskKH"
 );
 
-/* var corsOptions = {
-  origin: "https://card-ap.herokuapp.com",
-}; */
+var corsOptions = {
+    origin: "https://card-ap.herokuapp.com",
+};
 
-//server.use(cors(corsOptions));
+server.use(cors(corsOptions));
 
-server.use(function (req, res, next) {
+/*server.use(function (req, res, next) {
 
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'https://usine-digitale-vcard.herokuapp.com');
@@ -39,7 +39,7 @@ server.use(function (req, res, next) {
 
     // Pass to next layer of middleware
     next();
-});
+});*/
 
 server.use(bodyParser.urlencoded({ extended: true }));
 
@@ -56,27 +56,27 @@ server.use("/paydunya", Paydunya);
 server.use(express.json());
 server.use("/api", Auth);
 
-server.use(function (req, res, next) {
-  req.socket.on("error", function () {});
-  res.socket.on("error", function () {});
-  next();
+server.use(function(req, res, next) {
+    req.socket.on("error", function() {});
+    res.socket.on("error", function() {});
+    next();
 });
 
 mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 });
 
 const PORT = process.env.PORT || 5000;
 const db = mongoose.connection;
 
 db.on("error", (err) => {
-  console.error(err);
+    console.error(err);
 });
 db.once("open", () => {
-  console.log("DB started successfully");
+    console.log("DB started successfully");
 });
 
 server.listen(PORT, () => {
-  console.log("Server started: 5000");
+    console.log("Server started: 5000");
 });
