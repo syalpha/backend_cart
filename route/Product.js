@@ -12,8 +12,8 @@
 
  router.get('/all', ProductController.findAll);
  router.get('/:id', ProductController.findOne);
- router.patch('/:id', verifyTokenAndAdmin, ProductController.update);
- router.delete('/:id', verifyTokenAndAdmin, ProductController.destroy);
+ router.patch('/:id', ProductController.update);
+ router.delete('/:id', ProductController.destroy);
 
  const multer = require("multer");
  const storage = multer.diskStorage({
