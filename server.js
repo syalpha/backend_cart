@@ -10,6 +10,17 @@ const OrderRoute = require("./route/Order");
 const CartRoute = require("./route/Cart");
 const DesignYourCartRoute = require("./route/DesignYourCart");
 const Paydunya = require("./route/Paydunya");
+const Vcard = require("./route/Vcard")
+    //passport import
+var passport = require("passport");
+
+//import session
+const session = require('express-session');
+
+//passport config
+require('./Config/passport')(passport)
+
+//require('./config')
 
 const cors = require("cors");
 const stripe = require("stripe")(
@@ -51,6 +62,20 @@ server.use(cors(corsOptions));
     next();
 });*/
 
+//session middleware
+server.use(session({
+        secret: 'keyboard cat',
+        resave: false,
+        saveUninitialized: false
+    }))
+    //passport middleware
+
+server.use(passport.initialize())
+server.use(passport.session())
+
+
+
+
 server.use(bodyParser.urlencoded({ extended: true }));
 
 server.use(bodyParser.json({ extended: true }));
@@ -65,7 +90,7 @@ server.use("/design", DesignYourCartRoute);
 server.use("/paydunya", Paydunya);
 server.use(express.json());
 server.use("/api", Auth);
-
+server.use("/app", Vcard)
 server.use(function(req, res, next) {
     req.socket.on("error", function() {});
     res.socket.on("error", function() {});
