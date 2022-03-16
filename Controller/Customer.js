@@ -5,6 +5,7 @@ exports.create = async(req, res) => {
     const customer = new Customer({
         fullName: req.body.fullName,
         email: req.body.email,
+        tel: req.body.tel,
         adresse: req.body.adresse,
         city: req.body.city
     });

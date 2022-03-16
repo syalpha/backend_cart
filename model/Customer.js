@@ -10,6 +10,10 @@ const CustomerSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    tel: {
+        type: String,
+        require: true
+    },
     adresse: {
         type: String,
         require: true
@@ -25,3 +29,4 @@ const CustomerSchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model("Customer", CustomerSchema);
+//#barmaki221
