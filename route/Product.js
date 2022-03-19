@@ -37,6 +37,7 @@
          img: `${basePath}${fileName}`,
          price: req.body.price,
          qtite: req.body.qtite,
+         totalPrice: req.body.totalPrice
 
      })
      await product.save().then(data => {

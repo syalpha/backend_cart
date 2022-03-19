@@ -30,7 +30,10 @@ const ProductSchema = new mongoose.Schema({
             type: Number,
             required: true
         },
-
+        totalPrice: {
+            type: Number,
+            required: false
+        },
     },
 
     { timestamps: true }
