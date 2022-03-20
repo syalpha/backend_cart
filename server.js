@@ -29,7 +29,7 @@ const stripe = require("stripe")(
 );
 
 var corsOptions = {
-    origin: "*",
+    origin: "http://localhost:4200",
     methods: [
         'GET',
         'POST',
