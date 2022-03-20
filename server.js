@@ -28,7 +28,7 @@ const stripe = require("stripe")(
     "sk_test_51KEcipKN0gt4zFdRhEixWzcloryZ0QlYHWhIy9syPWJF8sChb0LIpEj7rRo2byN2xFtxC3W2f2zEaHZLbaXgeIio00mzdNskKH"
 );
 
-
+/*
 var corsOptions = {
     origin: "http://localhost:4200",
     methods: [
@@ -44,23 +44,23 @@ var corsOptions = {
 };
 
 server.use(cors(corsOptions));
+*/
 
-/*
 server.use(function(req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
     // Request methods you wish to allow
-    //res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
     // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With,Content-type, Accept, Authorization');
 
-    if (req.method === 'OPTIONS') {
+    /*if (req.method === 'OPTIONS') {
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
         return res.status(200).json({})
-    }
+    }*/
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
@@ -69,7 +69,7 @@ server.use(function(req, res, next) {
     // Pass to next layer of middleware
     next();
 });
-*/
+
 //session middleware
 server.use(session({
         secret: 'keyboard cat',
