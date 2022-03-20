@@ -36,7 +36,7 @@ var corsOptions = {
         'PUT',
         'DELETE'
     ],
-
+    optionsSuccessStatus: 200,
     allowedHeaders: [
         'Content-Type',
     ],
