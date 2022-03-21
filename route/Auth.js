@@ -128,19 +128,42 @@ router.post('/login', async(req, res) => {
             return res.status(400).send('The user not found');
         }
 
-        if (admin && bcrypt.compareSync(req.body.password, admin.passwordHash)) {
-            const token = jwt.sign({
-                    id: admin.id,
-                    isAdmin: admin.isAdmin
-                },
-                secret, { expiresIn: '1d' }
-            )
-
-            res.status(200).send({ admin: admin.email, token: token })
-        } else {
-            res.status(400).send('password is wrong!');
+        var passwordIsValid = bcrypt.compareSync(
+            req.body.password,
+            admin.password
+        );
+        if (!passwordIsValid) {
+            return res.status(401).send({
+                accessToken: null,
+                message: "Invalid Password!"
+            });
         }
 
+        var token = jwt.sign({ id: admin.id, isAdmin: admin.isAdmin }, process.env.secret, {
+            expiresIn: 86400 // 24 hours
+        });
+
+        res.status(200).send({
+            id: admin.id,
+            isAdmin: admin.isAdmin,
+            email: admin.email,
+            password: admin.password,
+            accessToken: token
+        });
+
+        /* if (admin && bcrypt.compareSync(req.body.password, admin.passwordHash)) {
+             const token = jwt.sign({
+                     id: admin.id,
+                     isAdmin: admin.isAdmin
+                 },
+                 secret, { expiresIn: '1d' }
+             )
+
+             res.status(200).send({ admin: admin.email, token: token })
+         } else {
+             res.status(400).send('password is wrong!');
+         }
+         */
 
     })
     //@desc Auth with Google
