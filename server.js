@@ -42,11 +42,11 @@ var corsOptions = {
         'Content-Type',
     ],
 };
-
-server.use(cors(corsOptions));
 */
+server.use(cors());
 
-server.use(function(req, res, next) {
+
+/*server.use(function(req, res, next) {
 
     // Website you wish to allow to connect
     res.header('Access-Control-Allow-Origin', '*');
@@ -60,7 +60,7 @@ server.use(function(req, res, next) {
     /*if (req.method === 'OPTIONS') {
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
         return res.status(200).json({})
-    }*/
+    }
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
@@ -69,7 +69,7 @@ server.use(function(req, res, next) {
     // Pass to next layer of middleware
     next();
 });
-
+*/
 //session middleware
 server.use(session({
         secret: 'keyboard cat',

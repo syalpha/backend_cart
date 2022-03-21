@@ -61,7 +61,7 @@ router.post("/register", async(req, res) => {
 
 
 /////////////////////////LOGIN/////////////////////////////////////////////
-/*
+
 router.post("/login", async(req, res) => {
     Admin.findOne({
             where: {
@@ -103,16 +103,16 @@ router.post("/login", async(req, res) => {
         });
 });
 
-*/
 
-router.post('/login', async(req, res) => {
+
+/*router.post('/login', async(req, res) => {
         const admin = await Admin.findOne({ email: req.body.email })
         const secret = process.env.secret;
         if (!admin) {
             return res.status(400).send('The user not found');
         }
 
-        if (user && bcrypt.compareSync(req.body.password, admin.passwordHash)) {
+        if (admin && bcrypt.compareSync(req.body.password, admin.passwordHash)) {
             const token = jwt.sign({
                     id: admin.id,
                     isAdmin: admin.isAdmin
@@ -126,9 +126,9 @@ router.post('/login', async(req, res) => {
         }
 
 
-    })
-    //@desc Auth with Google
-    //@route GET /auth/google
+    })*/
+//@desc Auth with Google
+//@route GET /auth/google
 
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 
