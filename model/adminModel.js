@@ -17,8 +17,6 @@ const AdminSchema = new mongoose.Schema({
             required: false,
 
         },
-
-
         password: {
             type: String,
             required: true,

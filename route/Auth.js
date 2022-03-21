@@ -11,7 +11,8 @@ dotenv.config();
 
 /////////////////////////////////REGISTER/////////////////////////////////////
 
-router.post("/register", async(req, res) => {
+
+/*router.post("/register", async(req, res) => {
 
     // Our register logic starts here
     try {
@@ -19,7 +20,7 @@ router.post("/register", async(req, res) => {
         const { username, email, password, isAdmin } = req.body;
 
         // Validate admin input
-        if (!(email && password && username && isAdmin)) {
+        if (!(email && password && username)) {
             res.status(400).send("All input is required");
         }
 
@@ -44,7 +45,7 @@ router.post("/register", async(req, res) => {
 
         // Create token
         const token = jwt.sign({ admin_id: admin._id, email, isAdmin: admin.isAdmin },
-            process.env.TOKEN_SECRET, {
+            process.env.secret, {
                 expiresIn: "2h",
             }
         );
@@ -57,11 +58,26 @@ router.post("/register", async(req, res) => {
         console.log(err);
     }
     // Our register logic ends here
-});
+});*/
+
+router.post('/register', async(req, res) => {
+    let admin = new Admin({
+        username: req.body.username,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 10),
+        isAdmin: req.body.isAdmin
+    })
+    admin = await admin.save();
+
+    if (!admin)
+        return res.status(400).send('the user cannot be created!')
+
+    res.send(admin);
+})
 
 
 /////////////////////////LOGIN/////////////////////////////////////////////
-
+/*
 router.post("/login", async(req, res) => {
     Admin.findOne({
             where: {
@@ -85,7 +101,7 @@ router.post("/login", async(req, res) => {
                 });
             }
 
-            var token = jwt.sign({ id: admin.id, isAdmin: admin.isAdmin }, process.env.TOKEN_SECRET, {
+            var token = jwt.sign({ id: admin.id, isAdmin: admin.isAdmin }, process.env.secret, {
                 expiresIn: 86400 // 24 hours
             });
 
@@ -102,10 +118,10 @@ router.post("/login", async(req, res) => {
             res.status(500).send({ message: err.message });
         });
 });
+*/
 
 
-
-/*router.post('/login', async(req, res) => {
+router.post('/login', async(req, res) => {
         const admin = await Admin.findOne({ email: req.body.email })
         const secret = process.env.secret;
         if (!admin) {
@@ -126,9 +142,9 @@ router.post("/login", async(req, res) => {
         }
 
 
-    })*/
-//@desc Auth with Google
-//@route GET /auth/google
+    })
+    //@desc Auth with Google
+    //@route GET /auth/google
 
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 
