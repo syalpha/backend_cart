@@ -9,6 +9,7 @@ module.exports = (passport) => {
             callbackURL: `http://localhost:5000/api/auth/google/callback`,
         },
         async(accessToken, refreshToken, profile, done) => {
+            console.log(profile)
             const newSocialUser = {
 
                 googleId: profile.id,
