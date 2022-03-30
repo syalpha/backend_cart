@@ -1,14 +1,32 @@
+const express = require('express');
+const server = express();
 const router = require("express").Router();
 const Admin = require("../model/adminModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
 const passport = require("passport");
-
+const cors = require('cors')
 
 dotenv.config();
 
+var corsOptions = {
+    origin: "http://cart-ud.usinedigitale.org/",
+    methods: [
+        'GET',
+        'POST',
+        'PUT',
+        'DELETE'
+    ],
+    credentials: true,
+    optionsSuccessStatus: 200,
+    allowedHeaders: [
+        'Content-Type', 'Authorization'
+    ],
 
+};
+
+//server.use(cors(corsOptions));
 /////////////////////////////////REGISTER/////////////////////////////////////
 
 
@@ -169,12 +187,12 @@ router.post('/login', async(req, res) => {
     //@desc Auth with Google
     //@route GET /auth/google
 
-router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get('/google', cors(corsOptions), passport.authenticate('google', { scope: ['profile'] }));
 
 //@desc  Google Callback
 //@route GET /auth/google/callback
 
-router.get('/auth/google/callback', passport.authenticate('google'
+router.get('/auth/google/callback', cors(corsOptions), passport.authenticate('google'
     //, { failureRedirect: '/error', successRedirect: '/dash' }
 ));
 
