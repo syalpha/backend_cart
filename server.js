@@ -43,7 +43,9 @@ var corsOptions = {
     ],
 };
 */
-server.use(cors());
+server.use(cors({
+    origin: "https://localhost:4200"
+}));
 
 
 /*server.use(function(req, res, next) {
