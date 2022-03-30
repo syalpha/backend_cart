@@ -11,7 +11,7 @@ const cors = require('cors')
 dotenv.config();
 
 var corsOptions = {
-    origin: "http://cart-ud.usinedigitale.org",
+    origin: "*",
     methods: [
         'GET',
         'POST',
