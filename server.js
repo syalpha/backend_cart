@@ -44,7 +44,7 @@ var corsOptions = {
 };
 */
 server.use(cors({
-    origin: "https://localhost:4200"
+    origin: "*"
 }));
 
 
