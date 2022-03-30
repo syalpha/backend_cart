@@ -35,7 +35,9 @@ var corsOptions = {
         'GET',
         'POST',
         'PUT',
-        'DELETE'
+        'DELETE',
+        'HEAD',
+        'PATCH'
     ],
     credentials: true,
     optionsSuccessStatus: 200,
