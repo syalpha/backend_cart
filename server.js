@@ -28,24 +28,25 @@ const stripe = require("stripe")(
     "sk_test_51KEcipKN0gt4zFdRhEixWzcloryZ0QlYHWhIy9syPWJF8sChb0LIpEj7rRo2byN2xFtxC3W2f2zEaHZLbaXgeIio00mzdNskKH"
 );
 
-/*
+
 var corsOptions = {
-    origin: "http://localhost:4200",
-    methods: [
-        'GET',
-        'POST',
-        'PUT',
-        'DELETE'
-    ],
-    optionsSuccessStatus: 200,
-    allowedHeaders: [
-        'Content-Type',
-    ],
+    /* origin: "https://localhost:4200",
+     methods: [
+         'GET',
+         'POST',
+         'PUT',
+         'DELETE'
+     ],
+     optionsSuccessStatus: 200,
+     allowedHeaders: [
+         'Content-Type',
+     ],*/
+    "Access-Control-Allow-Origin": "https://localhost:4200",
+    "Access-Control-Allow-Methods": "POST,GET,PUT,DELETE",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization"
 };
-*/
-server.use(cors({
-    origin: "*"
-}));
+
+server.use(cors(corsOptions));
 
 
 /*server.use(function(req, res, next) {
