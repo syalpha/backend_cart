@@ -30,7 +30,7 @@ const stripe = require("stripe")(
 
 
 var corsOptions = {
-    origin: "*",
+    origin: "http://cart-ud.usinedigitale.org/",
     methods: [
         'GET',
         'POST',
@@ -45,7 +45,7 @@ var corsOptions = {
 
 };
 
-server.use(cors());
+server.use(cors(corsOptions));
 
 
 /*server.use(function(req, res, next) {
