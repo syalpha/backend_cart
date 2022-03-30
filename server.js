@@ -31,14 +31,7 @@ const stripe = require("stripe")(
 
 var corsOptions = {
     origin: "*",
-    methods: [
-        'GET',
-        'POST',
-        'PUT',
-        'DELETE',
-        'HEAD',
-        'PATCH'
-    ],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
     optionsSuccessStatus: 200,
     allowedHeaders: [
