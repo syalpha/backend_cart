@@ -21,7 +21,7 @@ var corsOptions = {
     credentials: true,
     optionsSuccessStatus: 200,
     allowedHeaders: [
-        'Content-Type', 'Authorization'
+        'Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'
     ],
 
 };
