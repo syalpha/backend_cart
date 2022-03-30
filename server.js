@@ -30,13 +30,14 @@ const stripe = require("stripe")(
 
 
 var corsOptions = {
-    origin: "https://localhost:4200",
+    origin: "*",
     methods: [
         'GET',
         'POST',
         'PUT',
         'DELETE'
     ],
+    credentials: true,
     optionsSuccessStatus: 200,
     allowedHeaders: [
         'Content-Type', 'Authorization'
