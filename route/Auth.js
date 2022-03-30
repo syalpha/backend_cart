@@ -182,12 +182,12 @@ router.post('/login', async(req, res) => {
     //@desc Auth with Google
     //@route GET /auth/google
 
-router.get('/google', cors(corsOptions), passport.authenticate('google', { scope: ['profile'] }));
+router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 
 //@desc  Google Callback
 //@route GET /auth/google/callback
 
-router.get('/auth/google/callback', cors(corsOptions), passport.authenticate('google'
+router.get('/auth/google/callback', passport.authenticate('google'
     //, { failureRedirect: '/error', successRedirect: '/dash' }
 ));
 
