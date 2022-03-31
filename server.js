@@ -11,6 +11,7 @@ const CartRoute = require("./route/Cart");
 const DesignYourCartRoute = require("./route/DesignYourCart");
 const Paydunya = require("./route/Paydunya");
 const CustomerRouter = require("./route/Customer");
+const SocialRegister = require("./route/SocialRegister");
 const Vcard = require("./route/Vcard")
     //passport import
 var passport = require("passport");
@@ -97,6 +98,7 @@ server.use(express.json());
 server.use("/api", Auth);
 server.use("/app", Vcard);
 server.use("/customer", CustomerRouter);
+server.use("apiSocial", SocialRegister)
 server.use(function(req, res, next) {
     req.socket.on("error", function() {});
     res.socket.on("error", function() {});
