@@ -41,7 +41,7 @@ var corsOptions = {
 
 };
 
-server.use(cors());
+server.use(cors(corsOptions));
 
 
 /*server.use(function(req, res, next) {
@@ -98,7 +98,7 @@ server.use(express.json());
 server.use("/api", Auth);
 server.use("/app", Vcard);
 server.use("/customer", CustomerRouter);
-server.use("apiSocial", SocialRegister)
+server.use("/apiSocial", SocialRegister)
 server.use(function(req, res, next) {
     req.socket.on("error", function() {});
     res.socket.on("error", function() {});
