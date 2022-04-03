@@ -31,7 +31,7 @@ const stripe = require("stripe")(
 
 
 var corsOptions = {
-    origin: "https://cart-ud.usinedigitale.org",
+    origin: "*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
     optionsSuccessStatus: 200,
