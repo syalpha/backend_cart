@@ -25,11 +25,6 @@ require('./Config/passport')(passport)
 //require('./config')
 
 const cors = require("cors");
-const stripe = require("stripe")(
-    "sk_test_51KEcipKN0gt4zFdRhEixWzcloryZ0QlYHWhIy9syPWJF8sChb0LIpEj7rRo2byN2xFtxC3W2f2zEaHZLbaXgeIio00mzdNskKH"
-);
-
-
 var corsOptions = {
     origin: "https://cart-ud.usinedigitale.org/",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -38,10 +33,9 @@ var corsOptions = {
     allowedHeaders: [
         '*'
     ],
-
 };
 
-server.use(cors);
+server.use(cors());
 
 
 /*server.use(function(req, res, next) {
