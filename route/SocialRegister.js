@@ -1,7 +1,8 @@
+const SocialRegister = require("../model/SocialRegister");
 const express = require('express');
 const router = express.Router();
 
-const SocialRegisterController = require('../controller/SocialRegister');
+const SocialRegisterController = require('../Controller/SocialRegister');
 
 router.post('/createSocialRegister', SocialRegisterController.create);
 
