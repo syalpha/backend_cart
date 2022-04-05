@@ -35,7 +35,15 @@ var corsOptions = {
     ],
 };
 
-server.use(cors(corsOptions));
+server.use(cors({
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+    optionsSuccessStatus: 200,
+    allowedHeaders: [
+        '*'
+    ],
+}));
 
 
 /*server.use(function(req, res, next) {
