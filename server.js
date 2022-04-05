@@ -41,7 +41,7 @@ var corsOptions = {
 
 };
 
-server.use(corsOptions);
+server.use(cors);
 
 
 /*server.use(function(req, res, next) {
