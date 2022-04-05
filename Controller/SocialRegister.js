@@ -19,3 +19,11 @@ exports.create = async(req, res) => {
         });
     });
 }
+exports.findAll = async(req, res) => {
+    try {
+        const socialRegister = await SocialRegister.find();
+        res.status(200).json(socialRegister);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}

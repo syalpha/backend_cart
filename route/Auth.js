@@ -6,22 +6,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
 const passport = require("passport");
-const cors = require('cors')
 
 dotenv.config();
 
-var corsOptions = {
-    origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-    optionsSuccessStatus: 200,
-    allowedHeaders: [
-        '*'
-    ],
-
-};
-
-//server.use(cors(corsOptions));
 /////////////////////////////////REGISTER/////////////////////////////////////
 
 
@@ -72,7 +59,15 @@ var corsOptions = {
     }
     // Our register logic ends here
 });*/
-
+//Liste des utilisateurs
+router.get('/allUser', async(req, res) => {
+    try {
+        const admin = await Admin.find();
+        res.status(200).json(admin);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+})
 router.post('/register', async(req, res) => {
     let admin = new Admin({
         username: req.body.username,
@@ -182,22 +177,23 @@ router.post('/login', async(req, res) => {
     //@desc Auth with Google
     //@route GET /auth/google
 
-router.get('/google', cors(), passport.authenticate('google', { scope: ['profile'] }));
+router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 
 //@desc  Google Callback
 //@route GET /auth/google/callback
 
-router.get('/auth/google/callback', cors(), passport.authenticate('google'
+router.get('/auth/google/callback', passport.authenticate('google'
     //, { failureRedirect: '/error', successRedirect: '/dash' }
 ));
 
-/*
-router.get('/dash', (res, req) => {
-    res.send('Hello')
-})
+router.get(`/get/count`, async(req, res) => {
+    const adminCount = await Admin.countDocuments()
 
-router.get('/error', (res, req) => {
-    res.send('Hello loy def fi')
-})
-*/
+    if (!adminCount) {
+        res.status(500).json({ success: false });
+    }
+    res.send({
+        adminCount: adminCount
+    });
+});
 module.exports = router;

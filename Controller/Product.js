@@ -2,33 +2,7 @@ const Product = require('../model/Product')
 
 
 // Create and Save a new create
-/*exports.create = async (req, res) => {
-    if (!req.body.title && !req.body.desc && !req.body.img && !req.body.price && !req.body.categorie && !req.body.qtite) {
-        res.status(400).send({ message: "Content can not be empty!" });
-    }
 
-    const product = new Product({
-
-        title: req.body.title,
-        desc: req.body.desc,
-        img: req.body.img,
-        categorie: req.body.categorie,
-        price: req.body.price,
-        qtite: req.body.qtite,
-    });
-
-    await product.save().then(data => {
-        res.send({
-            message: "Product created successfully!!",
-            product: data
-        });
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while creating product"
-        });
-    });
-};
-*/
 // Retrieve all users from the database.
 exports.findAll = async(req, res) => {
     try {
