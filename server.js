@@ -26,7 +26,7 @@ require('./Config/passport')(passport)
 
 var cors = require("cors");
 var corsOptions = {
-    origin: "https://cart-ud.usinedigitale.org/",
+    origin: "*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
     optionsSuccessStatus: 200,
@@ -35,15 +35,7 @@ var corsOptions = {
     ],
 };
 
-server.use(cors({
-    origin: "https://cart-ud.usinedigitale.org/",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-    optionsSuccessStatus: 200,
-    allowedHeaders: [
-        '*'
-    ],
-}));
+server.use(cors(corsOptions));
 
 
 /*server.use(function(req, res, next) {
