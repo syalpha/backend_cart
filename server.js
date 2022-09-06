@@ -10,6 +10,7 @@ const ProductRoute = require('./route/Product')
 const OrderRoute = require('./route/Order')
 const CartRoute = require('./route/Cart')
 const paydounya = require('./route/paydounya')
+const DemandCardRoute = require('./route/DemandCard')
 
 const cors = require("cors");
 
@@ -34,6 +35,7 @@ server.use(bodyParser.json({ extended: true }))
 //Routes
 
 server.use('/user', UserRoute)
+server.use('/demand', DemandCardRoute)
 server.use('/product', ProductRoute)
 server.use('/order', OrderRoute)
 server.use('/cart', CartRoute)

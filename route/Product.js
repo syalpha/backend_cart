@@ -2,6 +2,7 @@ const express = require('express');
 const Product = require('../model/Product');
 const multer = require("multer");
 const router = express.Router();
+const ProductController = require('../Controller/Product')
 
 const {
   verifyToken,
@@ -9,7 +10,7 @@ const {
   verifyTokenAndAdmin,
 } = require("./VerifyToken");
 
-const ProductController = require('../Controller/Product')
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './public/upload/')
@@ -43,23 +44,24 @@ router.post('/create', uploadOptions.single('img'), async(req,res) => {
     });
 });
 });
-router.get('/', ProductController.findAll);
-router.get('/:id', ProductController.findOne);
+
+//  router.get('/', ProductController.findAll);
+//  router.get('/:id', ProductController.findOne);
 
 
 
 // router.post('/create', verifyToken, ProductController.create);
-router.patch('/:id',  verifyTokenAndAdmin,ProductController.update);
+// router.patch('/:id',  verifyTokenAndAdmin,ProductController.update);
 
 // router.post('/create', ProductController.create);
 // router.patch('/:id', verifyTokenAndAdmin, ProductController.update);
 
 // router.patch('/:id',  verifyTokenAndAdmin,ProductController.update);
 
-router.delete('/:id', verifyTokenAndAdmin, ProductController.destroy);
+// router.delete('/:id', verifyTokenAndAdmin, ProductController.destroy);
 
-router.patch('/:id',ProductController.update);
-router.delete('/:id', ProductController.destroy);
+// router.patch('/:id',ProductController.update);
+// router.delete('/:id', ProductController.destroy);
 
 
 module.exports = router;
