@@ -1,105 +1,199 @@
+const express = require('express');
+const server = express();
 const router = require("express").Router();
 const Admin = require("../model/adminModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
-
+const passport = require("passport");
 
 dotenv.config();
 
-
 /////////////////////////////////REGISTER/////////////////////////////////////
 
-router.post("/register", async (req, res) => {
 
-  // Our register logic starts here
-  try {
-    // Get admin input
-    const { username, email, password } = req.body;
+/*router.post("/register", async(req, res) => {
 
-    // Validate admin input
-    if (!(email && password && username)) {
-      res.status(400).send("All input is required");
+    // Our register logic starts here
+    try {
+        // Get admin input
+        const { username, email, password, isAdmin } = req.body;
+
+        // Validate admin input
+        if (!(email && password && username)) {
+            res.status(400).send("All input is required");
+        }
+
+        // check if admin already exist
+        // Validate if admin exist in our database
+        const oldUser = await Admin.findOne({ email });
+
+        if (oldUser) {
+            return res.status(409).send("User Already Exist. Please Login");
+        }
+
+        //Encrypt admin password
+        encryptedPassword = await bcrypt.hash(password, 10);
+
+        // Create admin in our database
+        const admin = await Admin.create({
+            username,
+            email: email.toLowerCase(), // sanitize: convert email to lowercase
+            password: encryptedPassword,
+            isAdmin
+        });
+
+        // Create token
+        const token = jwt.sign({ admin_id: admin._id, email, isAdmin: admin.isAdmin },
+            process.env.secret, {
+                expiresIn: "2h",
+            }
+        );
+        // save admin token
+        admin.token = token;
+
+        // return new admin
+        res.status(201).json(admin);
+    } catch (err) {
+        console.log(err);
     }
-
-    // check if admin already exist
-    // Validate if admin exist in our database
-    const oldUser = await Admin.findOne({ email });
-
-    if (oldUser) {
-      return res.status(409).send("User Already Exist. Please Login");
+    // Our register logic ends here
+});*/
+//Liste des utilisateurs
+router.get('/allUser', async(req, res) => {
+    try {
+        const admin = await Admin.find();
+        res.status(200).json(admin);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
     }
+})
+router.post('/register', async(req, res) => {
+    let admin = new Admin({
+        username: req.body.username,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 10),
+        isAdmin: req.body.isAdmin
+    })
+    admin = await admin.save();
 
-    //Encrypt admin password
-    encryptedPassword = await bcrypt.hash(password, 10);
+    if (!admin)
+        return res.status(400).send('the user cannot be created!')
 
-    // Create admin in our database
-    const admin = await Admin.create({
-      username,
-      email: email.toLowerCase(), // sanitize: convert email to lowercase
-      password: encryptedPassword,
-    });
-
-    // Create token
-    const token = jwt.sign(
-      { admin_id: admin._id, email },
-      process.env.TOKEN_SECRET,
-      {
-        expiresIn: "2h",
-      }
-    );
-    // save admin token
-    admin.token = token;
-
-    // return new admin
-    res.status(201).json(admin);
-  } catch (err) {
-    console.log(err);
-  }
-  // Our register logic ends here
-});
+    res.send(admin);
+})
 
 
 /////////////////////////LOGIN/////////////////////////////////////////////
+/*
+router.post("/login", async(req, res) => {
+    Admin.findOne({
+            where: {
+                email: req.body.email
+            }
+        })
+        .then(admin => {
+            if (!admin) {
+                return res.status(404).send({ message: "admin Not found." });
+            }
 
-router.post("/login", async (req, res) => {
-  Admin.findOne({
-    where: {
-      email: req.body.email
-    }
-  })
-    .then(admin => {
-      if (!admin) {
-        return res.status(404).send({ message: "admin Not found." });
-      }
+            var passwordIsValid = bcrypt.compareSync(
+                req.body.password,
+                admin.password
+            );
 
-      var passwordIsValid = bcrypt.compareSync(
-        req.body.password,
-        admin.password
-      );
+            if (!passwordIsValid) {
+                return res.status(401).send({
+                    accessToken: null,
+                    message: "Invalid Password!"
+                });
+            }
 
-      if (!passwordIsValid) {
-        return res.status(401).send({
-          accessToken: null,
-          message: "Invalid Password!"
+            var token = jwt.sign({ id: admin.id, isAdmin: admin.isAdmin }, process.env.secret, {
+                expiresIn: 86400 // 24 hours
+            });
+
+            res.status(200).send({
+                id: admin.id,
+                isAdmin: admin.isAdmin,
+                email: admin.email,
+                password: admin.password,
+                accessToken: token
+            });
+
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
         });
-      }
+});
+*/
 
-      var token = jwt.sign({ id: admin.id }, process.env.TOKEN_SECRET, {
-        expiresIn: 86400 // 24 hours
-      });
 
-      res.status(200).send({
-        id: admin.id,
-        email: admin.email,
-        password: admin.password,
-        accessToken: token
-      });
+router.post('/login', async(req, res) => {
+        const admin = await Admin.findOne({ email: req.body.email })
+        const secret = process.env.secret;
+        if (!admin) {
+            return res.status(400).send('The user not found');
+        }
+
+        var passwordIsValid = bcrypt.compareSync(
+            req.body.password,
+            admin.password
+        );
+        if (!passwordIsValid) {
+            return res.status(401).send({
+                accessToken: null,
+                message: "Invalid Password!"
+            });
+        }
+
+        var token = jwt.sign({ id: admin.id, isAdmin: admin.isAdmin }, process.env.secret, {
+            expiresIn: 86400 // 24 hours
+        });
+
+        res.status(200).send({
+            id: admin.id,
+            isAdmin: admin.isAdmin,
+            email: admin.email,
+            password: admin.password,
+            accessToken: token
+        });
+
+        /* if (admin && bcrypt.compareSync(req.body.password, admin.passwordHash)) {
+             const token = jwt.sign({
+                     id: admin.id,
+                     isAdmin: admin.isAdmin
+                 },
+                 secret, { expiresIn: '1d' }
+             )
+
+             res.status(200).send({ admin: admin.email, token: token })
+         } else {
+             res.status(400).send('password is wrong!');
+         }
+         */
 
     })
-    .catch(err => {
-      res.status(500).send({ message: err.message });
+    //@desc Auth with Google
+    //@route GET /auth/google
+
+router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+
+//@desc  Google Callback
+//@route GET /auth/google/callback
+
+router.get('/auth/google/callback', passport.authenticate('google'
+    //, { failureRedirect: '/error', successRedirect: '/dash' }
+));
+
+router.get(`/get/count`, async(req, res) => {
+    const adminCount = await Admin.countDocuments()
+
+    if (!adminCount) {
+        res.status(500).json({ success: false });
+    }
+    res.send({
+        adminCount: adminCount
     });
 });
-
 module.exports = router;
